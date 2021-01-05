@@ -1,0 +1,326 @@
+﻿<!DOCTYPE html>
+<html ng-app="projectApp">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/styles.css" rel="stylesheet" />
+</head>
+<body ng-controller="proCtrl" class="sb-nav-fixed">
+    <nav class="sb-topnav navbar sticky-top navbar-expand navbar-dark bg-dark">
+
+        <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fa fa-bars"></i></button>
+        <div class="container">
+            @Html.ActionLink("Provider", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item"><a ng-href="#!providers" class="nav-link">Providers</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navbar-->
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">Menu</div>
+                        <a class="nav-link" href="@Url.Action("Index", "Home")">
+                            <div class="sb-nav-link-icon"><i class="fa fa-home"></i></div>Home
+                        </a>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="ml-0">
+                        <p class="ml-4">Connect With Us</p>
+                        <ul class="list-unstyled row ml-4 ">
+                            <li class="mr-2"><a href="#" target="_blank"><i class="fa fa-2x fa-facebook-square"></i></a> </li>
+                            <li class="mr-2"><a href="#" target="_blank"><i class="fa fa-2x fa-twitter-square"></i></a> </li>
+                            <li class="mr-2"><a href="#" target="_blank"><i class="fa fa-2x fa-instagram"></i></a> </li>
+                            <li class="mr-2"><a href="#" target="_blank"><i class="fa fa-2x fa-google-plus-square"></i></a> </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid" style="min-height:480px">
+                    @RenderBody()
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; CroyBikroy.com Website 2020</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <div class="modal" tabindex="-1" role="dialog" id="delModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Delete</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are You Sure To Delete</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" ng-click="deDeleteProvider()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" tabindex="-1" role="dialog" id="delVehicleModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Delete!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure to delete?</p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" ng-click="doDeleteVehicle()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" tabindex="-1" role="dialog" id="delDriverModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Delete!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure to delete?</p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" ng-click="doDeleteDriver()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/angular-messages.js"></script>
+    <script src="~/Scripts/angular-route.js"></script>
+    <script src="~/Content/ui-bootstrap4/dist/ui-bootstrap.js"></script>
+    <script src="~/Content/ui-bootstrap4/dist/ui-bootstrap-tpls.js"></script>
+    <script src="~/Scripts/scripts.js"></script>
+    <script>
+        angular.module("projectApp", ['ngRoute', 'ngMessages', "ui.bootstrap"])
+            .constant("apiUrl", "/api/")
+            .constant("customUrl", "/custom/")
+            .config(($routeProvider) => {
+                $routeProvider
+                    .when("/home", {
+                        templateUrl: "/App/views/home.html"
+                    })
+                    .when("/providers", {
+                        templateUrl: "/App/views/providers.html"
+                    })
+                    .when("/createProvider", {
+                        templateUrl: "/App/views/createProvider.html"
+                    })
+                    .when("/editProvider/:id", {
+                        templateUrl: "/App/views/editProvider.html"
+                    })
+                    .when("/editDriver/:id", {
+                        templateUrl: "/App/views/editDriver.html"
+                    })
+                    .when("/createDriver/", {
+                        templateUrl: "/App/views/createDriver.html"
+                    })
+                    .when("/createVehicle/", {
+                        templateUrl: "/App/views/createVehicle.html"
+                    })
+                    .when("/editVehicle/:id", {
+                        templateUrl: "/App/views/editVehicle.html"
+                    })
+                    .otherwise({ redirectTo: '/home' });
+
+            })
+            .controller("proCtrl", ($scope, ApiService, apiUrl, customUrl) => {
+                ////////
+                $scope.errorMsg = null;
+                $scope.model = {};
+                ////////////////////////////////////
+
+                ///////////////////////////////////////
+                $scope.$on('driverUpdated', (evt, data) => {
+                    //console.log('Event');
+                    angular.forEach($scope.model.providers, function (v, k) {
+                        if (v.provider.ProviderId == data.ProviderId) {
+                            angular.forEach(v.provider.Drivers, function (v1, k1) {
+                                if (v1.DriverId == data.DriverId) {
+                                    angular.copy(data, v1);
+                                    console.log(v1);
+                                }
+                            });
+                        }
+                    })
+                })
+                $scope.$on('vehicleUpdated', (evt, data) => {
+                    //console.log('Event');
+                    angular.forEach($scope.model.providers, function (v, k) {
+                        if (v.provider.ProviderId == data.ProviderId) {
+                            angular.forEach(v.provider.Vehicles, function (v1, k1) {
+                                if (v1.VehicleID == data.VehicleID) {
+                                    angular.copy(data, v1);
+                                    console.log(v1);
+                                }
+                            });
+                        }
+                    })
+                })
+                $scope.$on('driverInserted', (evt, data) => {
+                    angular.forEach($scope.model.providers, function (v, k) {
+                        if (v.provider.ProviderId == data.ProviderId) {
+                            v.provider.Drivers.push(data);
+                        }
+                    })
+
+                })
+                $scope.$on('vehicleInserted', (evt, data) => {
+                    angular.forEach($scope.model.providers, function (v, k) {
+                        if (v.provider.ProviderId == data.ProviderId) {
+                            v.provider.Vehicles.push(data);
+                        }
+                    });
+                })
+
+                $scope.$on('providerInserted', (evt, data) => {
+                    $scope.model.providers.push({ isExpanded: false, provider: data });
+                })
+
+                $scope.$on('providerUpdated', (evt, data) => {
+                    $scope.model.providers.push({ isExpanded: false, provider: data });
+                })
+
+
+                ApiService.get(customUrl + "Providers", null)
+                    .then(r => {
+                        $scope.model.providers = [];
+                        angular.forEach(r.data, (v, k) => {
+                            $scope.model.providers.push({ isExpanded: false, provider: v })
+                        });
+                        console.log($scope.model.providers);
+                    }, err => {
+                        console.log(err);
+                    });
+                $scope.expandChild = (index) => {
+                    $scope.model.providers[index].isExpanded = !$scope.model.providers[index].isExpanded;
+                }
+                $scope.providerToDelete = null;
+                $scope.vehicleToDelete = null;
+                $scope.driverToDelete = null;
+                $scope.providerSource = null;
+                $scope.delIndex = null;
+                ////////////////////////
+                $scope.deleteProvider = (index) => {
+                    $scope.providerToDelete = index;
+                    $("#delModal").modal('show');
+                }
+                $scope.deDeleteProvider = () => {
+                    var providerId = $scope.model.providers[$scope.providerToDelete].provider.ProviderId;
+                    ApiService.delete(apiUrl + "Providers/" + providerId, null)
+                        .then(r => {
+                            $scope.model.providers.splice($scope.providerToDelete, 1);
+                            $("#delModal").modal('hide');
+                        }, err => {
+                            console.log(err)
+                        });
+                }
+                $scope.delProviderVehicle = (providerid, pid, index) => {
+                    console.log(providerid);
+
+                    $scope.vehicleToDelete = pid;
+                    $scope.providerSource = providerid;
+                    $scope.delIndex = index;
+                    console.log($scope.providerSource);
+                    $("#delVehicleModal").modal('show');
+                }
+                $scope.delProviderDriver = (providerid, sid, index) => {
+                    $scope.driverToDelete = sid;
+                    $scope.providerSource = providerid;
+                    $scope.delIndex = index;
+                    console.log($scope.providerSource);
+                    $("#delDriverModal").modal('show');
+                }
+                $scope.doDeleteVehicle = () => {
+                    ApiService.delete(apiUrl + "Vehicles/" + $scope.vehicleToDelete, null)
+                        .then(r => {
+                            angular.forEach($scope.model.providers, (v, k) => {
+
+                                if (v.provider.ProviderId == $scope.providerSource) {
+
+                                    v.provider.Vehicles.splice($scope.delIndex, 1);
+                                }
+                            })
+                            $scope.vehicleToDelete = null;
+                            $scope.providerSource = null;
+                            $scope.delIndex = null;
+
+                            $("#delVehicleModal").modal('hide');
+                        }, err => { })
+                }
+                $scope.doDeleteDriver = () => {
+                    ApiService.delete(apiUrl + "Drivers/" + $scope.driverToDelete, null)
+                        .then(r => {
+                            angular.forEach($scope.model.providers, (v, k) => {
+
+                                if (v.provider.ProviderId == $scope.providerSource) {
+
+                                    v.provider.Drivers.splice($scope.delIndex, 1);
+                                }
+                            })
+                            $scope.driverToDelete = null;
+                            $scope.providerSource = null;
+                            $scope.delIndex = null;
+
+                            $("#delDriverModal").modal('hide');
+                        }, err => { })
+                }
+            });
+    </script>
+    <script src="~/App/Services/ApiService.js"></script>
+    <script src="~/App/Controllers/serviceCtrl.js"></script>
+    <script src="~/App/Controllers/driverController.js"></script>
+    <script src="~/App/Controllers/createProviderCtrl.js"></script>
+    <script src="~/App/Controllers/editProviderCtrl.js"></script>
+    <script src="~/App/Controllers/createDriver.js"></script>
+    <script src="~/App/Controllers/createVehicle.js"></script>
+    <script src="~/App/Filters/filters.js"></script>
+</body>
+</html>
